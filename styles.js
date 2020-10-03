@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   blueCube: {
     color: 'blue',
     transform: [
-      { translate: [1, -30, 2] }
+      { translate: [1, -3, 2] }
     ]
   },
   greenCube: {

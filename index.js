@@ -31,7 +31,7 @@ export default class VrScene extends React.Component {
 
     if (show === 0) {
       this.setState({ show: (this.state.show = 1) });
-      Environment.setBackgroundImage(asset('island.jpg'))
+      Environment.setBackgroundImage(asset('japan.jpg'))
     }
 
     if (show === 1) {
@@ -48,7 +48,7 @@ export default class VrScene extends React.Component {
         {
           this.state.show === 0 ?
             <View >
-              <VrButton onClick={this.Interaction} title='hola' >
+              <VrButton onClick={this.Interaction} >
                 <Entity source={{ obj: asset('./cube.obj') }} style={styles.blueCube} />
               </VrButton>
             </View> : null
@@ -56,10 +56,12 @@ export default class VrScene extends React.Component {
 
         {
           this.state.show === 1 ?
+          <View>
             <VrButton onClick={this.Interaction} title='hola' >
               <Entity source={{ obj: asset('./cube.obj') }} style={styles.greenCube} />
+              <Entity source={{ obj: asset('./Goku.obj'),  mtl: asset('./Goku.mtl'), texture: asset('./goku') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.5 }, { translate: [1, -10, -10] }], width: 400}} />
             </VrButton>
-
+          </View>
             : null
         }
 
@@ -82,4 +84,4 @@ export default class VrScene extends React.Component {
 };
 
 
-AppRegistry.registerComponent('Hello360', () => VrScene);
+AppRegistry.registerComponent('VrScene', () => VrScene);
