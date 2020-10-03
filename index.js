@@ -20,9 +20,10 @@ export default class VrScene extends React.Component {
   }
 
   Interaction = () => {
-    // AudioModule.playOneShot({
-    //   source: asset('astronaut.mp3'),
-    // });
+     AudioModule.playOneShot({
+      source: asset('astronaut.mp3'),
+      volume: 0.3,
+    });
 
     // return;
     // this.setState({ show: (this.state.show = true) });
@@ -48,8 +49,9 @@ export default class VrScene extends React.Component {
         {
           this.state.show === 0 ?
             <View >
-              <VrButton onClick={this.Interaction} >
+              <VrButton onClick={this.Interaction}  >
                 <Entity source={{ obj: asset('./cube.obj') }} style={styles.blueCube} />
+                <Entity source={{ gltf2: asset('./naruto/scene.gltf'),  texture: asset('./naruto/textures')}} />
               </VrButton>
             </View> : null
         }
@@ -59,7 +61,7 @@ export default class VrScene extends React.Component {
           <View>
             <VrButton onClick={this.Interaction} title='hola' >
               <Entity source={{ obj: asset('./cube.obj') }} style={styles.greenCube} />
-              <Entity source={{ obj: asset('./Goku.obj'),  mtl: asset('./Goku.mtl'), texture: asset('./goku') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.5 }, { translate: [1, -10, -10] }], width: 400}} />
+              <Entity source={{ obj: asset('./goku/Goku.obj'),  mtl: asset('./goku/Goku.mtl'), texture: asset('./goku') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.5 }, { translate: [1, -10, -10] }], width: 400}} />
             </VrButton>
           </View>
             : null
@@ -68,16 +70,16 @@ export default class VrScene extends React.Component {
         {
           this.state.show === 2 ?
             <View>
-              <Entity source={{ obj: asset('./Alien.obj'), mtl: asset('./Alien.mtl') }} style={{ transform: [{ rotateY: -16, rotateX: 120 }, { scale: 0.1 }, { translate: [11, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./Gorilla.obj'), mtl: asset('./Gorilla.mtl') }} style={{ transform: [{ rotateY: 1, rotateX: 100 }, { scale: 0.1 }, { translate: [7, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./Clown.obj'), mtl: asset('./Clown.mtl') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.1 }, { translate: [1, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./Robot.obj'), mtl: asset('./Robot.mtl') }} style={{ transform: [{ rotateY: 8, rotateX: 100 }, { scale: 0.1 }, { translate: [-5, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./Elf.obj'), mtl: asset('./Elf.mtl') }} style={{ transform: [{ rotateY: 12, rotateX: 100 }, { scale: 0.1 }, { translate: [-10, -10, 1.5] }] }} />
+              <Entity source={{ obj: asset('./cofunders/Alien.obj'), mtl: asset('./cofunders/Alien.mtl') }} style={{ transform: [{ rotateY: -16, rotateX: 120 }, { scale: 0.1 }, { translate: [11, -10, 1.5] }] }} />
+              <Entity source={{ obj: asset('./cofunders/Gorilla.obj'), mtl: asset('./cofunders/Gorilla.mtl') }} style={{ transform: [{ rotateY: 1, rotateX: 100 }, { scale: 0.1 }, { translate: [7, -10, 1.5] }] }} />
+              <Entity source={{ obj: asset('./cofunders/Clown.obj'), mtl: asset('./cofunders/Clown.mtl') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.1 }, { translate: [1, -10, 1.5] }] }} />
+              <Entity source={{ obj: asset('./cofunders/Robot.obj'), mtl: asset('./cofunders/Robot.mtl') }} style={{ transform: [{ rotateY: 8, rotateX: 100 }, { scale: 0.1 }, { translate: [-5, -10, 1.5] }] }} />
+              <Entity source={{ obj: asset('./cofunders/Elf.obj'), mtl: asset('./cofunders/Elf.mtl') }} style={{ transform: [{ rotateY: 12, rotateX: 100 }, { scale: 0.1 }, { translate: [-10, -10, 1.5] }] }} />
             </View>
             : null
         }
 
-        {/* <Entity source={{ obj: asset('./astronaut.obj'), mtl: asset('./astronaut.mtl')}} style={{transform: [{rotateY:10}, {scale:0.1}, {translate: [10, -1, 20] }]}}  /> */}
+       {/*   <Entity source={{ obj: asset('./astronaut.obj'), mtl: asset('./astronaut.mtl')}} style={{transform: [{rotateY:10}, {scale:0.1}, {translate: [10, -1, 20] }]}}  />  */}
       </View>
     );
   }
