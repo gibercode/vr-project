@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -7,17 +7,49 @@ import {
   asset,
   VrButton,
   Environment,
-  NativeModules
+  NativeModules,
+  Animated
 } from 'react-360';
 import Entity from 'Entity';
 import styles from './styles';
 
 const { AudioModule } = NativeModules;
+const AnimatedEntity = Animated.createAnimatedComponent(Entity);
 
 export default class VrScene extends React.Component {
+
+  translation = new Animated.Value(0);
+
   state = {
     show: 0
   }
+
+  componentDidMount() {
+    this.SpacemanAnimation();
+  }
+
+  SpacemanAnimation = () => {
+    Animated.loop(
+      Animated.sequence([
+          Animated.delay(500),
+          Animated.timing(
+              this.translation,
+              {
+                  toValue: 0.5,
+                  duration: 1000,
+              }
+          ),
+          Animated.timing(
+              this.translation,
+              {
+                  toValue: 0,
+                  duration: 1000,
+              }
+          ),
+      ]),
+      {}
+  ).start();
+  };
 
   Interaction = () => {
      AudioModule.playOneShot({
@@ -39,7 +71,6 @@ export default class VrScene extends React.Component {
       this.setState({ show: (this.state.show = 2) });
       Environment.setBackgroundImage(asset('beach.jpg'))
     }
-
   }
 
   render() {
@@ -53,6 +84,15 @@ export default class VrScene extends React.Component {
                 <Entity source={{ obj: asset('./cube.obj') }} style={styles.blueCube} />
                 <Entity source={{ gltf2: asset('./naruto/scene.gltf'),  texture: asset('./naruto/textures')}} />
               </VrButton>
+              <AnimatedEntity 
+              source={{ obj: asset('./astronaut/Astronaut.obj'), mtl: asset('./astronaut/Astronaut.mtl'), texture: asset('./astronaut') }} 
+              style={{ transform: [
+                { rotateY: -10, rotateX: 120 }, 
+                { scale: 6 }, 
+                { translate: [1, -1, -5] } ,
+                { translateY: this.translation}
+              ],
+              width: 40}} />
             </View> : null
         }
 
