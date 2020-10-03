@@ -31,35 +31,27 @@ export default class VrScene extends React.Component {
   SpacemanAnimation = () => {
     Animated.loop(
       Animated.sequence([
-          Animated.delay(500),
-          Animated.timing(
-              this.translation,
-              {
-                  toValue: 0.5,
-                  duration: 1000,
-              }
-          ),
-          Animated.timing(
-              this.translation,
-              {
-                  toValue: 0,
-                  duration: 1000,
-              }
-          ),
+        Animated.delay(500),
+        Animated.timing(
+          this.translation,
+          {
+            toValue: 0.5,
+            duration: 1000,
+          }
+        ),
+        Animated.timing(
+          this.translation,
+          {
+            toValue: 0,
+            duration: 1000,
+          }
+        ),
       ]),
       {}
-  ).start();
+    ).start();
   };
 
   Interaction = () => {
-     AudioModule.playOneShot({
-      source: asset('astronaut.mp3'),
-      volume: 0.3,
-    });
-
-    // return;
-    // this.setState({ show: (this.state.show = true) });
-
     const { show } = this.state;
 
     if (show === 0) {
@@ -73,6 +65,13 @@ export default class VrScene extends React.Component {
     }
   }
 
+  Sound = (file, volume) => {
+    AudioModule.playOneShot({
+      source: asset(file),
+      volume
+    });
+  }
+
   render() {
     return (
       <View >
@@ -82,28 +81,44 @@ export default class VrScene extends React.Component {
             <View >
               <VrButton onClick={this.Interaction}  >
                 <Entity source={{ obj: asset('./cube.obj') }} style={styles.blueCube} />
-                <Entity source={{ gltf2: asset('./naruto/scene.gltf'),  texture: asset('./naruto/textures')}} />
               </VrButton>
-              <AnimatedEntity 
-              source={{ obj: asset('./astronaut/Astronaut.obj'), mtl: asset('./astronaut/Astronaut.mtl'), texture: asset('./astronaut') }} 
-              style={{ transform: [
-                { rotateY: -10, rotateX: 120 }, 
-                { scale: 6 }, 
-                { translate: [1, -1, -5] } ,
-                { translateY: this.translation}
-              ],
-              width: 40}} />
+
+              <VrButton>
+                <AnimatedEntity onClick={this.Sound('astronaut.mp3', 0.3)}
+                  source={{ obj: asset('./astronaut/Astronaut.obj'), mtl: asset('./astronaut/Astronaut.mtl'), texture: asset('./astronaut') }}
+                  style={{
+                    transform: [
+                      { rotateY: -10, rotateX: 120 },
+                      { scale: 5.5 },
+                      { translate: [1, -1, -5] },
+                      { translateY: this.translation }
+                    ],
+                    width: 40
+                  }} />
+              </VrButton>
+
+              <VrButton>
+                <Entity source={{ obj: asset('./rocket/rocket.obj'), mtl: asset('./rocket/rocket.mtl'), texture: asset('./rocket') }} style={{ transform: [{ rotateY: 120, rotateX: 10 }, { scale: 1 }, { translate: [-15, 10, 40] }] }} />
+              </VrButton>
+
+              <VrButton>
+                <Entity source={{ obj: asset('./asteroid/asteroid.obj'), mtl: asset('./asteroid/asteroid.mtl'), texture: asset('./asteroid') }} style={{ transform: [{ rotateY: -150, rotateX: 10 }, { scale: 0.1 }, { translate: [2000, -30, 1] }], width: 100 }} />
+              </VrButton>
+              <VrButton>
+                <Entity source={{ obj: asset('./earth/earth.obj'), mtl: asset('./earth/earth.mtl'), texture: asset('./earth') }} style={{ transform: [{ rotateY: -90, rotateX: 10 }, { scale: 0.1 }, { translate: [2000, 150, 1] }], width: 300 }} />
+              </VrButton>
+
             </View> : null
         }
 
         {
           this.state.show === 1 ?
-          <View>
-            <VrButton onClick={this.Interaction} title='hola' >
-              <Entity source={{ obj: asset('./cube.obj') }} style={styles.greenCube} />
-              <Entity source={{ obj: asset('./goku/Goku.obj'),  mtl: asset('./goku/Goku.mtl'), texture: asset('./goku') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.5 }, { translate: [1, -10, -10] }], width: 400}} />
-            </VrButton>
-          </View>
+            <View>
+              <VrButton onClick={this.Interaction} title='hola' >
+                <Entity source={{ obj: asset('./cube.obj') }} style={styles.greenCube} />
+                <Entity source={{ obj: asset('./goku/Goku.obj'), mtl: asset('./goku/Goku.mtl'), texture: asset('./goku') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.5 }, { translate: [1, -10, -10] }], width: 400 }} />
+              </VrButton>
+            </View>
             : null
         }
 
@@ -119,7 +134,7 @@ export default class VrScene extends React.Component {
             : null
         }
 
-       {/*   <Entity source={{ obj: asset('./astronaut.obj'), mtl: asset('./astronaut.mtl')}} style={{transform: [{rotateY:10}, {scale:0.1}, {translate: [10, -1, 20] }]}}  />  */}
+        {/*   <Entity source={{ obj: asset('./astronaut.obj'), mtl: asset('./astronaut.mtl')}} style={{transform: [{rotateY:10}, {scale:0.1}, {translate: [10, -1, 20] }]}}  />  */}
       </View>
     );
   }
