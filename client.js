@@ -1,3 +1,4 @@
+import { View } from 'react-360';
 // This file contains the boilerplate to execute your React app.
 // If you want to modify your application's content, start in "index.js"
 
@@ -21,7 +22,7 @@ function init(bundle, parent, options = {}) {
     r360.getDefaultLocation(),
   );
 
-  r360.compositor.setBackground(r360.getAssetURL('galaxy.jpg'));  
+  r360.compositor.setBackground(r360.getAssetURL('360_world.jpg'));  
 }
 
 window.React360 = { init };

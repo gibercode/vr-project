@@ -21,12 +21,14 @@ export default class VrScene extends React.Component {
   translation = new Animated.Value(0);
 
   state = {
-    show: 0
+    show: 4,
   }
+  
 
   componentDidMount() {
     this.SpacemanAnimation();
   }
+  
 
   SpacemanAnimation = () => {
     Animated.loop(
@@ -54,37 +56,66 @@ export default class VrScene extends React.Component {
   Interaction = () => {
     const { show } = this.state;
 
+    if (show === 4) {
+      this.setState({ show: (this.state.show = 0) });
+      Environment.setBackgroundImage(asset('galaxy.jpg'))     
+      this.PlaySong('starwars.mp3', 0.1) 
+    }
+
     if (show === 0) {
       this.setState({ show: (this.state.show = 1) });
-      Environment.setBackgroundImage(asset('japan.jpg'))
+      Environment.setBackgroundImage(asset('japan.jpg'))  
+      this.PlaySong('WanoKuni.mp3', 0.1)     
     }
 
     if (show === 1) {
       this.setState({ show: (this.state.show = 2) });
       Environment.setBackgroundImage(asset('beach.jpg'))
+      this.PlaySong('arenita-playita.mp3', 0.1)     
     }
   }
 
   Sound = (file, volume) => {
     AudioModule.playOneShot({
-      source: asset(file),
+      source: asset(`./sounds/${file}`),
+      volume
+    });
+  }
+
+  PlaySong= (file, volume) => {
+    AudioModule.playEnvironmental({
+      source: asset(`./sounds/${file}`),
       volume
     });
   }
 
   render() {
-    return (
-      <View >
+    return (<View>
+
+{
+          this.state.show === 4 ?
+            <View >
+             
+          <VrButton onClick={this.Interaction} >
+            <View style={{justifyContent:'center', alignContent:'center'}}>
+            <Text style={{color:'#fff',fontWeight:600,  textAlign:'center'}}>Dimensional</Text>
+            <Text style={{color:'#fff',fontWeight:600,  textAlign:'center'}}>Learning</Text>
+            </View>
+          
+          </VrButton>
+            </View> : null
+        }
+     
 
         {
           this.state.show === 0 ?
             <View >
               <VrButton onClick={this.Interaction}  >
-                <Entity source={{ obj: asset('./cube.obj') }} style={styles.blueCube} />
+              <Entity source={{ gltf2: asset('./portal/scene.gltf'),  texture: asset('./portal/textures')}} style={{ transform: [{ rotateY: -4, rotateX: 420 }, { scale: 0.1 }, { translate: [190, -600, 110] }], width: 200}} />
               </VrButton>
 
-              <VrButton>
-                <AnimatedEntity onClick={this.Sound('astronaut.mp3', 0.3)}
+              <VrButton onClick={() => this.Sound('astronaut.mp3', 0.5)}>
+                <AnimatedEntity 
                   source={{ obj: asset('./astronaut/Astronaut.obj'), mtl: asset('./astronaut/Astronaut.mtl'), texture: asset('./astronaut') }}
                   style={{
                     transform: [
@@ -97,7 +128,7 @@ export default class VrScene extends React.Component {
                   }} />
               </VrButton>
 
-              <VrButton>
+              <VrButton  >
                 <Entity source={{ obj: asset('./rocket/rocket.obj'), mtl: asset('./rocket/rocket.mtl'), texture: asset('./rocket') }} style={{ transform: [{ rotateY: 120, rotateX: 10 }, { scale: 1 }, { translate: [-15, 10, 40] }] }} />
               </VrButton>
 
@@ -114,9 +145,16 @@ export default class VrScene extends React.Component {
         {
           this.state.show === 1 ?
             <View>
-              <VrButton onClick={this.Interaction} title='hola' >
-                <Entity source={{ obj: asset('./cube.obj') }} style={styles.greenCube} />
-                <Entity source={{ obj: asset('./goku/Goku.obj'), mtl: asset('./goku/Goku.mtl'), texture: asset('./goku') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.5 }, { translate: [1, -10, -10] }], width: 400 }} />
+              <VrButton onClick={this.Interaction} >
+              <Entity source={{ gltf2: asset('./portal/scene.gltf'),  texture: asset('./portal/textures')}} style={{ transform: [{ rotateY: -4, rotateX: 420 }, { scale: 0.1 }, { translate: [190, 1000, 110] }], width: 200}} />
+             
+            </VrButton>
+
+              <VrButton onClick={() => this.Sound('kamehameha.mp3', 0.3)}>
+              <Entity source={{ obj: asset('./goku/Goku.obj'), mtl: asset('./goku/Goku.mtl'), texture: asset('./goku') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.5 }, { translate: [1, -10, -10] }], width: 400 }} />
+              </VrButton>
+              <VrButton onClick={() => this.Sound('luffy.mp3', 0.3)}>
+            <Entity source={{ obj: asset('./luffy/luffy.obj'),  mtl: asset('./luffy/luffy.mtl'), texture: asset('./luffy/Texturas') }} style={{ transform: [{ rotateY: -180, rotateX: 100 }, { scale: 0.5 }, { translate: [1, -120, -80] }], width: 400}} />
               </VrButton>
             </View>
             : null
@@ -124,18 +162,29 @@ export default class VrScene extends React.Component {
 
         {
           this.state.show === 2 ?
-            <View>
-              <Entity source={{ obj: asset('./cofunders/Alien.obj'), mtl: asset('./cofunders/Alien.mtl') }} style={{ transform: [{ rotateY: -16, rotateX: 120 }, { scale: 0.1 }, { translate: [11, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./cofunders/Gorilla.obj'), mtl: asset('./cofunders/Gorilla.mtl') }} style={{ transform: [{ rotateY: 1, rotateX: 100 }, { scale: 0.1 }, { translate: [7, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./cofunders/Clown.obj'), mtl: asset('./cofunders/Clown.mtl') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.1 }, { translate: [1, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./cofunders/Robot.obj'), mtl: asset('./cofunders/Robot.mtl') }} style={{ transform: [{ rotateY: 8, rotateX: 100 }, { scale: 0.1 }, { translate: [-5, -10, 1.5] }] }} />
-              <Entity source={{ obj: asset('./cofunders/Elf.obj'), mtl: asset('./cofunders/Elf.mtl') }} style={{ transform: [{ rotateY: 12, rotateX: 100 }, { scale: 0.1 }, { translate: [-10, -10, 1.5] }] }} />
-            </View>
+          <View>
+          <VrButton onClick={() => this.Sound('vieja-chismosa.mp3', 0.3)}>
+         <Entity source={{ obj: asset('./cofunders/Alien.obj'), mtl: asset('./cofunders/Alien.mtl') }} style={{ transform: [{ rotateY: -16, rotateX: 120 }, { scale: 0.1 }, { translate: [11, -10, 1.5] }] }} />
+         </VrButton>
+         <VrButton onClick={() => this.Sound('donkey-kong.mp3', 0.3)}>
+         <Entity source={{ obj: asset('./cofunders/Gorilla.obj'), mtl: asset('./cofunders/Gorilla.mtl') }} style={{ transform: [{ rotateY: 1, rotateX: 100 }, { scale: 0.1 }, { translate: [7, -10, 1.5] }] }} />
+        </VrButton>
+        <VrButton onClick={() => this.Sound('joker.mp3', 0.3)}>
+        <Entity source={{ obj: asset('./cofunders/Clown.obj'), mtl: asset('./cofunders/Clown.mtl') }} style={{ transform: [{ rotateY: -4, rotateX: 120 }, { scale: 0.1 }, { translate: [1, -10, 1.5] }] }} />
+          </VrButton>
+          <VrButton onClick={() => this.Sound('libertad.mp3', 0.3)}>
+         <Entity source={{ obj: asset('./cofunders/Robot.obj'), mtl: asset('./cofunders/Robot.mtl') }} style={{ transform: [{ rotateY: 8, rotateX: 100 }, { scale: 0.1 }, { translate: [-5, -10, 1.5] }] }} />
+        </VrButton>
+        <VrButton onClick={() => this.Sound('bankai.mp3', 0.3)}>
+         <Entity source={{ obj: asset('./cofunders/Elf.obj'), mtl: asset('./cofunders/Elf.mtl') }} style={{ transform: [{ rotateY: 12, rotateX: 100 }, { scale: 0.1 }, { translate: [-10, -10, 1.5] }] }} />
+       </VrButton>
+       </View>
             : null
         }
 
         {/*   <Entity source={{ obj: asset('./astronaut.obj'), mtl: asset('./astronaut.mtl')}} style={{transform: [{rotateY:10}, {scale:0.1}, {translate: [10, -1, 20] }]}}  />  */}
       </View>
+    
     );
   }
 };
