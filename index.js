@@ -100,7 +100,6 @@ export default class VrScene extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
     return (<View>
 
 {
@@ -118,10 +117,6 @@ export default class VrScene extends React.Component {
         }
      
 
-=======
-    return (
-      <View >
->>>>>>> c568f14dcd3d0b5c9760ddbce0b77bb324ae2124
         {
           this.state.show === 0 ?
             <View >
@@ -129,11 +124,7 @@ export default class VrScene extends React.Component {
               <Entity source={{ gltf2: asset('./portal/scene.gltf'),  texture: asset('./portal/textures')}} style={{ transform: [{ rotateY: -4, rotateX: 420 }, { scale: 0.1 }, { translate: [190, -600, 110] }], width: 200}} />
               </VrButton>
 
-<<<<<<< HEAD
               <VrButton onClick={() => this.Sound('astronaut.mp3', 0.7)}>
-=======
-              <VrButton onClick={this.Sound('astronaut.mp3', 0.3)}>
->>>>>>> c568f14dcd3d0b5c9760ddbce0b77bb324ae2124
                 <AnimatedEntity 
                   source={{ obj: asset('./astronaut/Astronaut.obj'), mtl: asset('./astronaut/Astronaut.mtl'), texture: asset('./astronaut') }}
                   style={{
