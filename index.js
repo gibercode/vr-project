@@ -36,16 +36,6 @@ export default class VrScene extends React.Component {
 
   componentDidMount() {
     this.SpacemanAnimation();
-
-    AudioModule.createAudio('astronaut', {
-      source: asset('astronaut.mp3'),
-      is3d: false,
-    });
-
-    setTimeout(() => {
-      AudioModule.play('astronaut');
-    }, 2000);
-    
   }
 
   SpacemanAnimation = () => {
