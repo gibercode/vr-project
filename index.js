@@ -24,8 +24,28 @@ export default class VrScene extends React.Component {
     show: 0
   }
 
+  constructor(){
+
+    super();
+
+    // AudioModule.createAudio('astronaut', {
+    //   source: asset('astronaut.mp3'),
+    //   is3d: true,
+    // });
+  }
+
   componentDidMount() {
     this.SpacemanAnimation();
+
+    AudioModule.createAudio('astronaut', {
+      source: asset('astronaut.mp3'),
+      is3d: false,
+    });
+
+    setTimeout(() => {
+      AudioModule.play('astronaut');
+    }, 2000);
+    
   }
 
   SpacemanAnimation = () => {
@@ -75,7 +95,6 @@ export default class VrScene extends React.Component {
   render() {
     return (
       <View >
-
         {
           this.state.show === 0 ?
             <View >
@@ -83,8 +102,8 @@ export default class VrScene extends React.Component {
                 <Entity source={{ obj: asset('./cube.obj') }} style={styles.blueCube} />
               </VrButton>
 
-              <VrButton>
-                <AnimatedEntity onClick={this.Sound('astronaut.mp3', 0.3)}
+              <VrButton onClick={this.Sound('astronaut.mp3', 0.3)}>
+                <AnimatedEntity 
                   source={{ obj: asset('./astronaut/Astronaut.obj'), mtl: asset('./astronaut/Astronaut.mtl'), texture: asset('./astronaut') }}
                   style={{
                     transform: [
